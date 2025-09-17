@@ -1,11 +1,12 @@
 # ConversaAI
 A conversational AI web application using HTML, CSS, JavaScript, PHP, and Ollama LLM. This is a learning project for my portfolio.
 
-## Project Scope:
+## 🚀 Project Scope:
 1. **Core features**: Send messages, receive AI responses, basic chat interface
 2. **Future enhancements**: Chat history, user sessions, message formatting
 
-## Project Structure
+## 📁 Folder Structure
+```bash
 ConversaAI/
 ├── index.html
 ├── assets/                 // Frontend resources
@@ -24,17 +25,21 @@ ConversaAI/
 │   ├── wireframes/
 │   └── daily-progress.md
 └── README.md
+```
 
-## Architecture Planning 
-### Frontend Architecture:
+## 🧠Architecture Planning 
+### 🎨 Frontend Architecture:
 1. Vanilla JavaScript (modular functions)
 2. Tailwind CSS for styling
 3. Responsive design approach
 
-### Backend Architecture:
+### 🛠️ Backend Architecture:
 1. PHP for API endpoints
 2. JSON files for data persistence
 3. RESTful API design
 
-### Communication Flow:
+### 🔁 Communication Flow:
 User Input → Frontend Validation → AJAX Request → PHP API → Ollama → Response Processing → UI Update
+
+## 🔗 License
+This project is open-source and available for learning purposes. Free to use with attribution.

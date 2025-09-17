@@ -18,4 +18,4 @@
 1. As a user, I want to type messages easily so that I can communicate naturally with AI
 2. As a user, I want streaming response so I have not wait for whole response
 3. As a user, I want to see conversation history so that I can reference previous responses
-4. As a user, I want to see notice messages while waiting for my response is generating
+4. As a user, I want to see updates while I'm waiting for a response.
