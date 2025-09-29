@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en" id="root" class="h-full">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>ConversaAI</title>
+		<link rel="stylesheet" href="./assets/css/base.css" />
+		<link rel="stylesheet" href="./assets/css/output.css" />
+	</head>
+	<body class="">
+        <section class="welcome-page flex flex-col min-h-screen">
+            <!-- Header -->
+		<header class="flex justify-end items-center p-4">
+			<div class="text-sm font-bold hidden">LOGO</div>
+			<span class="p-2 rounded-full bg-[var(--color-toggle-bg)]">
+                <img src="./assets/images/dark_mode_icon.svg" alt="Dark Mode">
+			</span>
+		</header>
+
+		<!-- Main -->
+		<main class="flex-1 flex items-center justify-center px-4 overflow-y-auto">
+			<div class="logo text-center text-3xl md:text-6xl">ConversaAI</div>
+		</main>
+
+		<!-- Footer -->
+		<footer class="p-4">
+			<form class="">
+                <div class="flex items-center relative">
+                    <textarea name="user_input" id="" placeholder="Ask Anything" class="p-4 w-full rounded-3xl border-2 text-base border-[var(--color-border)]" cols="5" rows="5">
+                       
+                    </textarea>
+				<!-- <input
+					type="text"
+					placeholder="Type a message..."
+					class="flex-1 border rounded-full px-3 py-2 text-sm focus:outline-none"
+				/> -->
+				 <span type="submit" class="absolute bottom-0 right-3 -translate-y-3  p-2 rounded-full bg-[var(--color-accent)]">
+					<img src="./assets/images/arrow_upward_white.svg" alt="Send">
+				</span>
+                </div>
+			</form>
+		</footer>
+        </section>
+	</body>
+</html>

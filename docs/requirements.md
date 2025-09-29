@@ -5,7 +5,9 @@
 2. Receive Streaming AI responses from Ollama
 3. Display conversation history during session
 4. Clear conversation option
-3. Responsive design for desktop/mobile
+5. Responsive design for desktop/mobile
+6. Copy AI response
+7. Dark/light mode
 
 ## Technical Requirements:
 1. Single user (no authentication needed)
@@ -16,6 +18,7 @@
 
 ## User Stories Format:
 1. As a user, I want to type messages easily so that I can communicate naturally with AI
-2. As a user, I want streaming response so I have not wait for whole response
+2. As a user, I want a streaming response so I don't have to wait for the whole response
 3. As a user, I want to see conversation history so that I can reference previous responses
-4. As a user, I want to see updates while I'm waiting for a response.
+4. As a user, I want to see updates while AI processing response.
+5. As a user, I want to copy the AI response
