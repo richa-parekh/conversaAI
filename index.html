@@ -4,34 +4,33 @@
 		<meta charset="UTF-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 		<title>ConversaAI</title>
-		<link rel="stylesheet" href="./assets/css/base.css" />
 		<link rel="stylesheet" href="./assets/css/output.css" />
 	</head>
 	<body
-		class="h-full bg-[var(--color-bg-primary)] text-[var(--color-text-primary)]"
+		class="h-full bg-white text-black"
 	>
 		<!-- App Container -->
-		<div class="flex h-dvh min-h-full flex-col ">
+		<div class="flex h-dvh min-h-full flex-col">
 			<!-- Header -->
 			<header
-				class="sticky top-0 z-10 border-b border-[var(--color-border)] bg-white/80 backdrop-blur "
+				class="sticky top-0 border-b border-platinum"
 			>
 				<div
 					class="mx-auto flex max-w-5xl md:max-w-7xl items-center justify-between px-4 py-3 "
 				>
 					<!-- Logo -->
 					<div class="flex items-center gap-3">
-						<div class="text-3xl lg:text-4xl text-[var(--color-logo-text)] logo">ConversaAI</div>
+						<div class="text-2xl lg:text-4xl text-black logo">ConversaAI</div>
 					</div>
-					<!-- Theme toggle -->
+					<!-- Theme Switch -->
 					<button
-						id="themeToggle"
+						id="themeSwitch"
 						type="button"
-						class="rounded-full border border-gray-300 text-sm text-[var(--color-text-primary)] shadow-sm transition hover:bg-[var(--color-accent)] cursor-pointer px-2 py-2"
-						aria-label="Toggle dark mode"
+						onclick="changeMode()"
+						class="rounded-full border border-platinum text-sm text-black default-shadow transition hover:bg-black hover:text-white hover:border-black cursor-pointer p-2"
+						aria-label="Switch to dark mode"
 					>
-						<!-- <img src="./assets/images/dark_mode_icon.svg" alt="Dark Mode" class="lg:w-7 lg:h-7"/> -->
-						 <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#333"><path d="M480-120q-150 0-255-105T120-480q0-150 105-255t255-105q14 0 27.5 1t26.5 3q-41 29-65.5 75.5T444-660q0 90 63 153t153 63q55 0 101-24.5t75-65.5q2 13 3 26.5t1 27.5q0 150-105 255T480-120Zm0-80q88 0 158-48.5T740-375q-20 5-40 8t-40 3q-123 0-209.5-86.5T364-660q0-20 3-40t8-40q-78 32-126.5 102T200-480q0 116 82 198t198 82Zm-10-270Z"/></svg>
+						 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 640" fill="#212529"  class="h-5 w-5 lg:h-6 lg:w-6 -rotate-30 fill-current"><!--!Font Awesome Free v7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2025 Fonticons, Inc.--><path d="M303.3 112.7C196.2 121.2 112 210.8 112 320C112 434.9 205.1 528 320 528C353.3 528 384.7 520.2 412.6 506.3C309.2 482.9 232 390.5 232 280C232 214.2 259.4 154.9 303.3 112.7zM64 320C64 178.6 178.6 64 320 64C339.4 64 358.4 66.2 376.7 70.3C386.6 72.5 394 80.8 395.2 90.8C396.4 100.8 391.2 110.6 382.1 115.2C321.5 145.4 280 207.9 280 280C280 381.6 362.4 464 464 464C469 464 473.9 463.8 478.8 463.4C488.9 462.6 498.4 468.2 502.6 477.5C506.8 486.8 504.6 497.6 497.3 504.6C451.3 548.8 388.8 576 320 576C178.6 576 64 461.4 64 320z"/></svg>
 					</button>
 				</div>
 			</header>
@@ -49,7 +48,7 @@
 					<!-- User Message -->
 					<div class="flex justify-end">
 						<div
-							class="relative max-w-[85%] border rounded-2xl border-[var(--color-border)] px-4 py-3  text-[var(--color-text-primary)] shadow-sm"
+							class="relative max-w-[85%] border rounded-2xl border-platinum px-4 py-3  text-black default-shadow"
 						>
 							<p class="leading-relaxed text-base">
 								This is an example of a user message
@@ -61,7 +60,7 @@
 					<div class="group">
 						<div class="mx-auto flex flex-wrap max-w-3xl items-start">
 							<div
-								class="w-full rounded-t-2xl border border-[var(--color-border)] border-b-0 bg-white p-4 text-base text-[var(--color-text-primary)]"
+								class="w-full rounded-t-2xl border border-platinum border-b-0 px-4 py-3 text-base text-black"
 							>
 								<p class="leading-relaxed">
 									This is an example AI response bubble.This is an example AI
@@ -70,20 +69,19 @@
 								</p>
 							</div>
 							<!-- Copy button -->
-							<button
-								class="w-full items-center rounded-md px-4 py-2 text-xs text-gray-600 rounded-b-2xl rounded-t-none border border-[var(--color-border)] border-t-2xl bg-white shadow-sm cursor-pointer"
-								data-copy
+							<div
+								class="w-full items-center rounded-md px-4 py-3 text-xs text-black rounded-b-2xl rounded-t-none border border-platinum default-shadow cursor-pointer"
 							>
-								<!-- <img src="./assets/images/copy_icon.svg" alt="Copy" /> -->
-								 <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#A3A1A1"><path d="M360-240q-33 0-56.5-23.5T280-320v-480q0-33 23.5-56.5T360-880h360q33 0 56.5 23.5T800-800v480q0 33-23.5 56.5T720-240H360Zm0-80h360v-480H360v480ZM200-80q-33 0-56.5-23.5T120-160v-560h80v560h440v80H200Zm160-240v-480 480Z"/></svg>
-							</button>
+								<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" class="h-4.5 w-4.5"><!--!Font Awesome Free v7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2025 Fonticons, Inc.--><path fill="#212529" d="M288 464L64 464c-8.8 0-16-7.2-16-16l0-224c0-8.8 7.2-16 16-16l48 0 0-48-48 0c-35.3 0-64 28.7-64 64L0 448c0 35.3 28.7 64 64 64l224 0c35.3 0 64-28.7 64-64l0-48-48 0 0 48c0 8.8-7.2 16-16 16zM224 304c-8.8 0-16-7.2-16-16l0-224c0-8.8 7.2-16 16-16l224 0c8.8 0 16 7.2 16 16l0 224c0 8.8-7.2 16-16 16l-224 0zm-64-16c0 35.3 28.7 64 64 64l224 0c35.3 0 64-28.7 64-64l0-224c0-35.3-28.7-64-64-64L224 0c-35.3 0-64 28.7-64 64l0 224z"/></svg>
+								 
+							</div>
 						</div>
 					</div>
 				</div>
 			</main>
 			<!-- Footer composer -->
 			<footer
-				class="sticky bottom-0 z-10 border-t border-[var(--color-border)] bg-white/80 backdrop-blur"
+				class="sticky bottom-0 border-t border-platinum"
 			>
 				<div class="mx-auto max-w-3xl px-3 lg:px-0 py-3">
 					<form id="composer" class="relative">
@@ -93,21 +91,22 @@
 								id="prompt"
 								name="prompt"
 								placeholder="Ask anything..."
-								class="min-h-[44px] w-full resize-y rounded-xl border border-[var(--color-border)] bg-white px-3 py-3 pr-12 text-base shadow-sm outline-none placeholder:text-[var(--color-text-secondary)]"
+								class="min-h-[44px] w-full resize-y rounded-xl border border-platinum  p-3 pr-12 text-base outline-none placeholder:text-french-gray font-medium"
 							></textarea>
 							<button
 								id="sendBtn"
 								type="submit"
-								class="grid h-10 w-10 shrink-0 place-items-center rounded-lg shadow-sm  border border-[var(--color-border)] " 
+								class="grid h-10 w-10 shrink-0 place-items-center rounded-full default-shadow border border-platinum " 
 								aria-label="Send" disabled
 							>
-								<!-- <img src="./assets/images/arrow_upward_black.svg" alt="Send" /> -->
-								 <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#333"><path d="M440-160v-487L216-423l-56-57 320-320 320 320-56 57-224-224v487h-80Z"/></svg>
+								<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 384 512" class="h-4.5 w-4.5"><!--!Font Awesome Free v7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2025 Fonticons, Inc.--><path fill="#212529" d="M214.6 17.4c-12.5-12.5-32.8-12.5-45.3 0l-160 160c-12.5 12.5-12.5 32.8 0 45.3s32.8 12.5 45.3 0L160 117.3 160 488c0 17.7 14.3 32 32 32s32-14.3 32-32l0-370.7 105.4 105.4c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3l-160-160z"/></svg>
 							</button>
 						</div>
 					</form>
 				</div>
 			</footer>
 		</div>
+		 <!-- Scripts -->
+    <script src="./assets/js/script.js"></script>
 	</body>
 </html>
