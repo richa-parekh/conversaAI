@@ -12,9 +12,12 @@
   --color-teal: #1F7A8C;
   --color-slate-gray: #6C757D;
   --color-french-gray: #ADB5BD;
+  --shadow-light: 0px 1px 2px 0px var(--color-platinum);
   /* Dark Theme */
   --color-onyx: #343A40;
   --color-outer-space: #495057;
+  --shadow-dark-primary: 0px 1px 2px 0px var(--color-onyx);
+  --shadow-dark-secondary: 0px 1px 2px 0px var(--color-outer-space);
 }
 
 /* Reset & Box Sizing */
@@ -33,12 +36,11 @@ html {
 body {
   font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
   line-height: 1.5;
-  background-color: var(--color-bg-primary);
-  color: var(--color-text-primary);
   -webkit-font-smoothing: antialiased;
   text-rendering: optimizeLegibility;
   font-optical-sizing: auto;
   font-style: normal;
+  /* @apply transition-colors duration-100 ease-in-out; */
 }
 
 /* Logo font */
@@ -47,9 +49,4 @@ body {
   font-optical-sizing: auto;
   font-weight: 600;
   font-style: normal;
-}
-
-/* Shadow */
-.default-shadow {
-  box-shadow: 0px 1px 2px 0px var(--color-platinum);
 }

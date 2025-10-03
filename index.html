@@ -7,30 +7,33 @@
 		<link rel="stylesheet" href="./assets/css/output.css" />
 	</head>
 	<body
-		class="h-full bg-white text-black"
+		class="h-full bg-white text-black dark:bg-black dark:text-white"
 	>
 		<!-- App Container -->
 		<div class="flex h-dvh min-h-full flex-col">
 			<!-- Header -->
 			<header
-				class="sticky top-0 border-b border-platinum"
+				class="sticky top-0 border-b border-platinum dark:border-onyx"
 			>
 				<div
 					class="mx-auto flex max-w-5xl md:max-w-7xl items-center justify-between px-4 py-3 "
 				>
 					<!-- Logo -->
 					<div class="flex items-center gap-3">
-						<div class="text-2xl lg:text-4xl text-black logo">ConversaAI</div>
+						<div class="text-2xl md:text-4xl text-black dark:text-white logo">ConversaAI</div>
 					</div>
 					<!-- Theme Switch -->
 					<button
 						id="themeSwitch"
 						type="button"
 						onclick="changeMode()"
-						class="rounded-full border border-platinum text-sm text-black default-shadow transition hover:bg-black hover:text-white hover:border-black cursor-pointer p-2"
-						aria-label="Switch to dark mode"
+						class="rounded-full border border-platinum dark:border-onyx text-sm text-black dark:text-white shadow-light dark:shadow-dark-secondary transition hover:bg-black hover:dark:bg-white hover:text-white hover:dark:text-black hover:border-black  hover:dark:border-white cursor-pointer p-2"
+						aria-label="Theme switch button"
 					>
-						 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 640" fill="#212529"  class="h-5 w-5 lg:h-6 lg:w-6 -rotate-30 fill-current"><!--!Font Awesome Free v7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2025 Fonticons, Inc.--><path d="M303.3 112.7C196.2 121.2 112 210.8 112 320C112 434.9 205.1 528 320 528C353.3 528 384.7 520.2 412.6 506.3C309.2 482.9 232 390.5 232 280C232 214.2 259.4 154.9 303.3 112.7zM64 320C64 178.6 178.6 64 320 64C339.4 64 358.4 66.2 376.7 70.3C386.6 72.5 394 80.8 395.2 90.8C396.4 100.8 391.2 110.6 382.1 115.2C321.5 145.4 280 207.9 280 280C280 381.6 362.4 464 464 464C469 464 473.9 463.8 478.8 463.4C488.9 462.6 498.4 468.2 502.6 477.5C506.8 486.8 504.6 497.6 497.3 504.6C451.3 548.8 388.8 576 320 576C178.6 576 64 461.4 64 320z"/></svg>
+						 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 640" fill="#212529"  class="h-5 w-5 md:h-6 md:w-6 -rotate-30 fill-current dark:hidden"><!--!Font Awesome Free v7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2025 Fonticons, Inc.--><path d="M303.3 112.7C196.2 121.2 112 210.8 112 320C112 434.9 205.1 528 320 528C353.3 528 384.7 520.2 412.6 506.3C309.2 482.9 232 390.5 232 280C232 214.2 259.4 154.9 303.3 112.7zM64 320C64 178.6 178.6 64 320 64C339.4 64 358.4 66.2 376.7 70.3C386.6 72.5 394 80.8 395.2 90.8C396.4 100.8 391.2 110.6 382.1 115.2C321.5 145.4 280 207.9 280 280C280 381.6 362.4 464 464 464C469 464 473.9 463.8 478.8 463.4C488.9 462.6 498.4 468.2 502.6 477.5C506.8 486.8 504.6 497.6 497.3 504.6C451.3 548.8 388.8 576 320 576C178.6 576 64 461.4 64 320z"/></svg>
+
+						 <!-- Light Mode -->
+						  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512" class="h-5 w-5 md:h-6 md:w-6 hidden fill-current dark:inline"><!--!Font Awesome Free v7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2025 Fonticons, Inc.--><path d="M200.6-7.9c-6.7-4.4-15.1-5.2-22.5-2.2S165.4-.5 163.9 7.3L143 110.6 39.7 131.4c-7.8 1.6-14.4 7-17.4 14.3s-2.2 15.8 2.2 22.5L82.7 256 24.5 343.8c-4.4 6.7-5.2 15.1-2.2 22.5s9.6 12.8 17.4 14.3L143 401.4 163.9 504.7c1.6 7.8 7 14.4 14.3 17.4s15.8 2.2 22.5-2.2l87.8-58.2 87.8 58.2c6.7 4.4 15.1 5.2 22.5 2.2s12.8-9.6 14.3-17.4l20.9-103.2 103.2-20.9c7.8-1.6 14.4-7 17.4-14.3s2.2-15.8-2.2-22.5l-58.2-87.8 58.2-87.8c4.4-6.7 5.2-15.1 2.2-22.5s-9.6-12.8-17.4-14.3L433.8 110.6 413 7.3C411.4-.5 406-7 398.6-10.1s-15.8-2.2-22.5 2.2L288.4 50.3 200.6-7.9zM186.9 135.7l17-83.9 71.3 47.3c8 5.3 18.5 5.3 26.5 0l71.3-47.3 17 83.9c1.9 9.5 9.3 16.8 18.8 18.8l83.9 17-47.3 71.3c-5.3 8-5.3 18.5 0 26.5l47.3 71.3-83.9 17c-9.5 1.9-16.9 9.3-18.8 18.8l-17 83.9-71.3-47.3c-8-5.3-18.5-5.3-26.5 0l-71.3 47.3-17-83.9c-1.9-9.5-9.3-16.9-18.8-18.8l-83.9-17 47.3-71.3c5.3-8 5.3-18.5 0-26.5l-47.3-71.3 83.9-17c9.5-1.9 16.8-9.3 18.8-18.8zM239.6 256a48.4 48.4 0 1 1 96.8 0 48.4 48.4 0 1 1 -96.8 0zm144.8 0a96.4 96.4 0 1 0 -192.8 0 96.4 96.4 0 1 0 192.8 0z"/></svg>
 					</button>
 				</div>
 			</header>
@@ -48,7 +51,7 @@
 					<!-- User Message -->
 					<div class="flex justify-end">
 						<div
-							class="relative max-w-[85%] border rounded-2xl border-platinum px-4 py-3  text-black default-shadow"
+							class="relative max-w-[85%] border rounded-2xl border-platinum dark:border-onyx px-4 py-3  text-black dark:text-white shadow-light dark:shadow-dark-primary"
 						>
 							<p class="leading-relaxed text-base">
 								This is an example of a user message
@@ -60,7 +63,7 @@
 					<div class="group">
 						<div class="mx-auto flex flex-wrap max-w-3xl items-start">
 							<div
-								class="w-full rounded-t-2xl border border-platinum border-b-0 px-4 py-3 text-base text-black"
+								class="w-full rounded-t-2xl border border-platinum dark:border-onyx border-b-0 px-4 py-3 text-base text-black dark:text-white"
 							>
 								<p class="leading-relaxed">
 									This is an example AI response bubble.This is an example AI
@@ -70,9 +73,9 @@
 							</div>
 							<!-- Copy button -->
 							<div
-								class="w-full items-center rounded-md px-4 py-3 text-xs text-black rounded-b-2xl rounded-t-none border border-platinum default-shadow cursor-pointer"
+								class="w-full items-center rounded-md px-4 py-3 text-xs text-black dark:text-white rounded-b-2xl rounded-t-none border border-platinum dark:border-onyx shadow-light dark:shadow-dark-primary cursor-pointer"
 							>
-								<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" class="h-4.5 w-4.5"><!--!Font Awesome Free v7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2025 Fonticons, Inc.--><path fill="#212529" d="M288 464L64 464c-8.8 0-16-7.2-16-16l0-224c0-8.8 7.2-16 16-16l48 0 0-48-48 0c-35.3 0-64 28.7-64 64L0 448c0 35.3 28.7 64 64 64l224 0c35.3 0 64-28.7 64-64l0-48-48 0 0 48c0 8.8-7.2 16-16 16zM224 304c-8.8 0-16-7.2-16-16l0-224c0-8.8 7.2-16 16-16l224 0c8.8 0 16 7.2 16 16l0 224c0 8.8-7.2 16-16 16l-224 0zm-64-16c0 35.3 28.7 64 64 64l224 0c35.3 0 64-28.7 64-64l0-224c0-35.3-28.7-64-64-64L224 0c-35.3 0-64 28.7-64 64l0 224z"/></svg>
+								<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" class="h-4.5 w-4.5 fill-current"><!--!Font Awesome Free v7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2025 Fonticons, Inc.--><path d="M288 464L64 464c-8.8 0-16-7.2-16-16l0-224c0-8.8 7.2-16 16-16l48 0 0-48-48 0c-35.3 0-64 28.7-64 64L0 448c0 35.3 28.7 64 64 64l224 0c35.3 0 64-28.7 64-64l0-48-48 0 0 48c0 8.8-7.2 16-16 16zM224 304c-8.8 0-16-7.2-16-16l0-224c0-8.8 7.2-16 16-16l224 0c8.8 0 16 7.2 16 16l0 224c0 8.8-7.2 16-16 16l-224 0zm-64-16c0 35.3 28.7 64 64 64l224 0c35.3 0 64-28.7 64-64l0-224c0-35.3-28.7-64-64-64L224 0c-35.3 0-64 28.7-64 64l0 224z"/></svg>
 								 
 							</div>
 						</div>
@@ -81,7 +84,7 @@
 			</main>
 			<!-- Footer composer -->
 			<footer
-				class="sticky bottom-0 border-t border-platinum"
+				class="sticky bottom-0 border-t border-platinum dark:border-onyx"
 			>
 				<div class="mx-auto max-w-3xl px-3 lg:px-0 py-3">
 					<form id="composer" class="relative">
@@ -91,15 +94,15 @@
 								id="prompt"
 								name="prompt"
 								placeholder="Ask anything..."
-								class="min-h-[44px] w-full resize-y rounded-xl border border-platinum  p-3 pr-12 text-base outline-none placeholder:text-french-gray font-medium"
+								class="min-h-[44px] w-full resize-y rounded-xl border border-platinum dark:border-onyx  p-3 pr-12 text-base outline-none placeholder:text-french-gray font-medium"
 							></textarea>
 							<button
 								id="sendBtn"
 								type="submit"
-								class="grid h-10 w-10 shrink-0 place-items-center rounded-full default-shadow border border-platinum " 
+								class="grid h-10 w-10 shrink-0 place-items-center rounded-full shadow-light bg-teal dark:shadow-dark-secondary border border-teal" 
 								aria-label="Send" disabled
 							>
-								<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 384 512" class="h-4.5 w-4.5"><!--!Font Awesome Free v7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2025 Fonticons, Inc.--><path fill="#212529" d="M214.6 17.4c-12.5-12.5-32.8-12.5-45.3 0l-160 160c-12.5 12.5-12.5 32.8 0 45.3s32.8 12.5 45.3 0L160 117.3 160 488c0 17.7 14.3 32 32 32s32-14.3 32-32l0-370.7 105.4 105.4c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3l-160-160z"/></svg>
+								<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 384 512" class="h-4.5 w-4.5 fill-current"><!--!Font Awesome Free v7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2025 Fonticons, Inc.--><path fill="#fff" d="M214.6 17.4c-12.5-12.5-32.8-12.5-45.3 0l-160 160c-12.5 12.5-12.5 32.8 0 45.3s32.8 12.5 45.3 0L160 117.3 160 488c0 17.7 14.3 32 32 32s32-14.3 32-32l0-370.7 105.4 105.4c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3l-160-160z"/></svg>
 							</button>
 						</div>
 					</form>
