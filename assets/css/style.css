@@ -4,21 +4,38 @@
 @import "tailwindcss";
 @custom-variant dark (&:where(.dark, .dark *));
 @theme {
-  /* COLORS */
-  /* Default */
-  --color-black: #212529;
-  --color-white:#FFFFFF;
-  --color-platinum: #DEE2E6;
-  --color-teal: #1F7A8C;
-  --color-slate-gray: #6C757D;
-  --color-french-gray: #ADB5BD;
-  --shadow-light: 0px 1px 2px 0px var(--color-platinum);
-  --shadow-secondary: 0px 1px 2px 0px var(--color-slate-gray);
-  /* Dark Theme */
-  --color-onyx: #343A40;
-  --color-outer-space: #495057;
-  --shadow-dark-primary: 0px 1px 2px 0px var(--color-onyx);
-  --shadow-dark-secondary: 0px 1px 2px 0px var(--color-outer-space);
+  /* Base Palette - Monochrome Scale */
+  --color-mono-50: #FFFFFF;
+  --color-mono-200: #DEE2E6;
+  --color-mono-400: #ADB5BD;
+  --color-mono-500: #6C757D;
+  --color-mono-600: #495057;
+  --color-mono-800: #343A40;
+  --color-mono-950: #212529;
+  
+  /* Accent Color */
+  --color-accent-600: #1F7A8C;
+  
+  /* Semantic Aliases - Light Theme */
+  --color-foreground: var(--color-mono-950);
+  --color-background: var(--color-mono-50);
+  --color-border-light: var(--color-mono-200);
+  --color-muted: var(--color-mono-500);
+  --color-placeholder: var(--color-mono-400);
+  
+  /* Semantic Aliases - Dark Theme */
+  --color-foreground-dark: var(--color-mono-50);
+  --color-background-dark: var(--color-mono-950);
+  --color-border-dark: var(--color-mono-800);
+  --color-muted-dark: var(--color-mono-600);
+  
+  /* Shadows - Light Theme */
+  --shadow-sm: 0px 1px 2px 0px var(--color-border-light);
+  --shadow-md: 0px 1px 2px 0px var(--color-muted);
+  
+  /* Shadows - Dark Theme */
+  --shadow-sm-dark: 0px 1px 2px 0px var(--color-border-dark);
+  --shadow-md-dark: 0px 1px 2px 0px var(--color-muted-dark);
 }
 
 /* Reset & Box Sizing */
