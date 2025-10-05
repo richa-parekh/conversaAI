@@ -8,7 +8,7 @@
 
 ### Light Mode
 | Purpose | Hex | Usage |
-|---------|--------|-----|-------|
+|---------|--------|-----|
 | Background | #FFFFFF | Background |
 | Text | #212529 | Text |
 | Text Placeholder | #ADB5BD | Placeholder text |
@@ -17,7 +17,7 @@
 
 ### Dark Mode
 | Purpose | Hex | Usage |
-|---------|--------|-----|-------|
+|---------|--------|-----|
 | Background Primary | #212529 | Background |
 | Text | #FFFFFF | Text |
 | Text Placeholder | #ADB5BD | Placeholder text |
