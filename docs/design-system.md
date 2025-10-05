@@ -7,7 +7,7 @@
 ## Color Palette
 
 ### Light Mode
-| Purpose | Color | Hex | Usage |
+| Purpose | Hex | Usage |
 |---------|--------|-----|-------|
 | Background | #FFFFFF | Background |
 | Text | #212529 | Text |
@@ -16,19 +16,18 @@
 | Accent | #1F7A8C | Buttons, links |
 
 ### Dark Mode
-| Purpose | Color | Hex | Usage |
+| Purpose | Hex | Usage |
 |---------|--------|-----|-------|
 | Background Primary | #212529 | Background |
 | Text | #FFFFFF | Text |
 | Text Placeholder | #ADB5BD | Placeholder text |
 | Border Default | #343A40 | Buttons, User/ AI Message borders |
 | Accent | #1F7A8C | Buttons, links |
-| Background Light Mode | #FFFFFF | Theme Toggle Button |
 
 ### Font Stack
 - Primary: Inter (Google Fonts)
 - Logo: Syne (Google Fonts)
-- Icons: (Fortawesome Icons)
+- Icons: Font awesome icons
 - Fallback: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif
 
 ## Component Specifications
@@ -57,7 +56,7 @@
     - Light Mode: Black background, white text
     - Dark Mode: White background, black text
 
-### Send Buttons
+### Send Button
 - Border Radius: 100%
 - Padding: 8px
 - Font: Up arrow icon, medium weight
