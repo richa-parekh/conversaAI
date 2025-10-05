@@ -1,2 +1,5 @@
-node_modules
+# Node dependencies
+node_modules/
+
+# Tailwind output
 assets/css/output.css

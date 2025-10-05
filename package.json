@@ -4,6 +4,7 @@
     "tailwindcss": "^4.1.13"
   },
   "scripts": {
-    "tw": "\"npx @tailwindcss/cli -i ./assets/css/style.css -o ./assets/css/output.css --watch\""
+    "build": "npx tailwindcss -i ./assets/css/input.css -o ./assets/css/output.css --minify", /* npm run build => compiles and minifies Tailwind CSS for production. */
+    "watch": "\"npx @tailwindcss/cli -i ./assets/css/style.css -o ./assets/css/output.css --watch\"" /* npm run watch => continuously rebuilds as you edit files (for local development). */
   }
 }
