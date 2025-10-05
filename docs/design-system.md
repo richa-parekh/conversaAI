@@ -1,7 +1,7 @@
 # ConversaAI - Design System
 
 ## Visual References
-- Figma File: [Link to your figma file]
+- Figma File: [Prototype Link](https://www.figma.com/proto/UhAqS1enX75KPsTPrvD0n9/ConversaAI---UI?node-id=0-1&t=HcY78M2yJ7dLVUiQ-1)
 - Design Inspiration: Clean, accessible
 
 ## Color Palette
@@ -9,77 +9,60 @@
 ### Light Mode
 | Purpose | Color | Hex | Usage |
 |---------|--------|-----|-------|
-| Background Primary | #FFFFFF | Main page background |
-| Background Secondary | #F5F5F5 | User bubbles backgrounds |
-| Text Primary | #1C1C1C | Main text |
-| Text Secondary | #A3A1A1 | Secondary text |
-| Border Default | #D9D9D9 | Buttons, User/ AI Message borders |
-| Accent | #D9D9D9 | Buttons, links |
-| Background Dark Mode | #F5F5F5 | Theme Toggle Button |
-| Logo Text | #1C1C1C | Logo |
+| Background | #FFFFFF | Background |
+| Text | #212529 | Text |
+| Text Placeholder | #ADB5BD | Placeholder text |
+| Border Default | #DEE2E6 | Buttons, User/ AI Message borders |
+| Accent | #1F7A8C | Buttons, links |
 
 ### Dark Mode
 | Purpose | Color | Hex | Usage |
 |---------|--------|-----|-------|
-| Background Primary | #1C1C1C | Main page background |
-| Background Secondary | #303030 | User input, AI response bubbles backgrounds |
-| Text Primary | #fff | Main text |
-| Text Secondary | #A3A1A1 | Secondary text |
-| Border Default | #434343 | Buttons, User/ AI Message borders |
-| Accent | #858585 | Buttons, links |
+| Background Primary | #212529 | Background |
+| Text | #FFFFFF | Text |
+| Text Placeholder | #ADB5BD | Placeholder text |
+| Border Default | #343A40 | Buttons, User/ AI Message borders |
+| Accent | #1F7A8C | Buttons, links |
 | Background Light Mode | #FFFFFF | Theme Toggle Button |
-| Icon Light Mode | #333333 | Theme Toggle Button |
-| Logo Text | #FFFFFF | Logo |
-
-<!-- ## Typography -->
 
 ### Font Stack
 - Primary: Inter (Google Fonts)
 - Logo: Syne (Google Fonts)
-- Icons: (Google Icons)
+- Icons: (Fortawesome Icons)
 - Fallback: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif
 
-<!-- ### Scale
-- H1: 32px, Bold
-- H2: 24px, Bold  
-- H3: 20px, SemiBold
-- Body Large: 18px, Regular
-- Body: 16px, Regular
-- Small: 14px, Regular
-- Caption: 12px, Regular
-
-## Spacing Scale
-Based on 4px base unit:
-- xs: 4px
-- sm: 8px
-- md: 16px
-- lg: 24px
-- xl: 32px
-- 2xl: 48px
-
 ## Component Specifications
+### Logo
+- Font: 24px, Bold
 
 ### Message Bubble
-- Padding: 16px
-- Border Radius: 12px
-- Max Width: 70% of container
+- Padding: 12px 16px
+- Border Radius: 16px
+- Border color: Border Default
+- Font: 16px, medium weight
 
 ### Input Field
-- Height: 44px (touch-friendly)
-- Border: 1px solid #E2E8F0
-- Border Radius: 8px
-- Padding: 12px 16px
+- Border Radius: 16px
+- Padding: 12px
+- Border color: Border Default
 
-### Buttons
-- Height: 40px
-- Border Radius: 8px
-- Padding: 8px 16px
-- Font: Medium weight
+### Theme Switch Button
+- Border Radius: 100%
+- Padding: 8px
+- Font: Moon and Sun icon, medium weight
+- Primary: 
+    - Light Mode: White background, black text
+    - Dark Mode: Black background, white text
+- Hover: 
+    - Light Mode: Black background, white text
+    - Dark Mode: White background, black text
+
+### Send Buttons
+- Border Radius: 100%
+- Padding: 8px
+- Font: Up arrow icon, medium weight
 - Primary: Accent background, white text
-- Secondary: White background, accent border
- -->
-## Implementation Notes
+- Secondary: White background, black text, light border
+
+# Implementation Notes
 - Mobile-first responsive approach
-<!-- - Minimum touch target: 44px
-- WCAG AA contrast compliance
-- Smooth transitions: 0.2s ease -->
