@@ -3,3 +3,6 @@ node_modules/
 
 # Tailwind output
 assets/css/output.css
+
+# VsCode
+.vscode
