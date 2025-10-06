@@ -22,7 +22,36 @@ function init() {
 // 3. THEME FUNCTION
 // ============================================
 function setupThemeSwitch(){
-	console.log("Theme switch settings");
+	const themeSwitch = document.getElementById('themeSwitch');
+
+	if(!themeSwitch){
+		console.error('Theme switch button not found!');
+		return;
+	}
+
+	const savedTheme = localStorage.getItem('theme');
+	console.log(`Saved theme: ${savedTheme}`);
+
+	if(savedTheme === 'dark'){
+		document.documentElement.classList.add('dark');
+	}
+console.log(`Saved theme: ${savedTheme}`);
+	themeSwitch.addEventListener('click', function(){
+		console.log('Theme switch button clicked');
+
+		document.documentElement.classList.toggle('dark');
+
+		const isDark = document.documentElement.classList.contains('dark');
+
+		if(isDark){
+			localStorage.setItem('theme', 'dark');
+			console.log('Switched to dark mode');
+		} else {
+			localStorage.setItem('theme', 'light');
+			console.log('Switched to light mode');
+		}
+	});
+	console.log('Theme switch si ready');
 }
 
 // ============================================
