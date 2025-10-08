@@ -67,3 +67,29 @@ body {
   font-weight: 600;
   font-style: normal;
 }
+
+.send-btn-default {
+  background-color: var(--color-background);
+  border-color: var(--color-border-light);
+  color: var(--color-placeholder);
+}
+
+.send-btn-active {
+  background-color: var(--color-accent-600);
+  border: var(--color-accent-600);
+  box-shadow: var(--shadow-md);
+  color: var(--color-background);
+}
+
+.dark .send-btn-default-dark {
+  background-color: var(--color-background-dark);
+  border-color: var(--color-border-dark);
+  color: var(--color-placeholder);
+}
+
+.dark .send-btn-active-dark {
+  background-color: var(--color-accent-600);
+  border: var(--color-accent-600);
+  box-shadow: var(--shadow-md);
+  color: var(--color-background);
+}
