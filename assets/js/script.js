@@ -95,10 +95,33 @@ function sendMessage(text) {
 
 function displayUserMessage(text) {
 	console.log(`Displaying user message ${text}`);
+	const chatContainer = document.getElementById('chatContainer');
+	const userMessageContainer = document.getElementById('userMessageContainer');
+	const userMessage = document.getElementById('userMessage');
+	if (!chatContainer || !userMessageContainer || !userMessage) {
+		console.error('Chat container not available');
+		return;
+	}
+
+	userMessageContainer.classList.remove('hidden');
+	userMessage.textContent = text;
+	scrollToBottom();
+	console.log('User message displayed');
 }
 
 function displayAIMessage(text) {
-	console.log(`Displaying AI message ${text}`);
+	const chatContainer = document.getElementById('chatContainer');
+	const aiMessageContainer = document.getElementById('aiMessageContainer');
+	const aiMessage = document.getElementById('aiMessage');
+	if (!chatContainer || !aiMessageContainer || !aiMessage) {
+		console.error('Chat container not available');
+		return;
+	}
+
+	aiMessageContainer.classList.remove('hidden');
+	aiMessage.textContent = text;
+	scrollToBottom();
+	console.log(`AI message displayed ${text}`);
 }
 
 // ============================================
@@ -112,6 +135,7 @@ function currentTheme() {
 // ============================================
 // 6. UPDATE SEND BUTTON BEHAVIOR-STYLE
 // ============================================
+// Disabled button if user message is not entered and Enabled if user entered message
 function updateSendButton(hasText) {
 	console.log(`userMessage ${hasText ? 'entered' : 'removed'}`);
 	const sendButton = document.getElementById('sendBtn');
@@ -123,4 +147,12 @@ function updateSendButton(hasText) {
 
 	sendButton.classList.toggle(activeClass, hasText);
 	sendButton.classList.toggle(defaultClass, !hasText);
+}
+
+// Helper function to scroll chat to bottom
+function scrollToBottom(){
+	const chatContainer = document.getElementById('chatContainer');
+	if(chatContainer){
+		chatContainer.scrollTop = chatContainer.scrollHeight;
+	}
 }

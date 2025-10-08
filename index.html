@@ -48,24 +48,22 @@
 					class="flex glow flex-col gap-6 overflow-y-auto pb-28"
 				>
 					<!-- User Message -->
-					<div class="flex justify-end">
+					<div id="userMessageContainer" class="flex justify-end hidden">
 						<div
 							class="relative max-w-[85%] border rounded-2xl border-border-light dark:border-border-dark px-4 py-3  text-foreground dark:text-background shadow-sm dark:shadow-sm-dark"
 						>
-							<p class="leading-relaxed text-base">
-								This is an example of a user message
+							<p id="userMessage" class="leading-relaxed text-base">
+								
 							</p>
 						</div>
 					</div>
 
 					<!-- AI Message -->
-					<div class="group">
+					<div id="aiMessageContainer" class="group hidden">
 						<div class="mx-auto flex flex-wrap max-w-3xl items-start">
-							<div
-								class="w-full rounded-t-2xl border border-border-light dark:border-border-dark border-b-0 px-4 py-3 text-base text-foreground dark:text-background"
+							<div class="w-full rounded-t-2xl border border-border-light dark:border-border-dark border-b-0 px-4 py-3 text-base text-foreground dark:text-background"
 							>
-								<p class="leading-relaxed">
-									This is an example AI response message with copy content option.
+								<p  id="aiMessage" class="leading-relaxed">
 								</p>
 							</div>
 							<!-- Copy button -->
