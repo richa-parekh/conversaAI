@@ -263,6 +263,9 @@
   .h-6 {
     height: calc(var(--spacing) * 6);
   }
+  .h-\[calc\(100vh-120px\)\] {
+    height: calc(100vh - 120px);
+  }
   .h-dvh {
     height: 100dvh;
   }
@@ -440,6 +443,9 @@
     --tw-outline-style: none;
     outline-style: none;
   }
+  .\[scrollbar-width\:none\] {
+    scrollbar-width: none;
+  }
   .placeholder\:text-placeholder {
     &::placeholder {
       color: var(--color-placeholder);
@@ -564,6 +570,11 @@
           color: var(--color-foreground);
         }
       }
+    }
+  }
+  .\[\&\:\:-webkit-scrollbar\]\:hidden {
+    &::-webkit-scrollbar {
+      display: none;
     }
   }
 }

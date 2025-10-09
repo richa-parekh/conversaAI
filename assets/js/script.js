@@ -105,7 +105,7 @@ function displayUserMessage(text) {
 
 	userMessageContainer.classList.remove('hidden');
 	userMessage.textContent = text;
-	scrollToBottom();
+	setTimeout(() => scrollToBottom(), 50);
 	console.log('User message displayed');
 }
 
@@ -120,7 +120,7 @@ function displayAIMessage(text) {
 
 	aiMessageContainer.classList.remove('hidden');
 	aiMessage.textContent = text;
-	scrollToBottom();
+	setTimeout(() => scrollToBottom(), 50);
 	console.log(`AI message displayed ${text}`);
 }
 
@@ -150,9 +150,18 @@ function updateSendButton(hasText) {
 }
 
 // Helper function to scroll chat to bottom
-function scrollToBottom(){
+function scrollToBottom() {
 	const chatContainer = document.getElementById('chatContainer');
-	if(chatContainer){
+	if (chatContainer) {
+		if ('scrollBehavior' in document.documentElement.style) {
+			chatContainer.scrollTo({
+				top: chatContainer.scrollHeight,
+				behavior: 'smooth'
+			});
+			return;
+		}
+
+		// Fallback for older browsers
 		chatContainer.scrollTop = chatContainer.scrollHeight;
 	}
 }
