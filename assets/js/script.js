@@ -94,34 +94,27 @@ function sendMessage(text) {
 }
 
 function displayUserMessage(text) {
-	console.log(`Displaying user message ${text}`);
-	const chatContainer = document.getElementById('chatContainer');
-	const userMessageContainer = document.getElementById('userMessageContainer');
-	const userMessage = document.getElementById('userMessage');
-	if (!chatContainer || !userMessageContainer || !userMessage) {
-		console.error('Chat container not available');
-		return;
-	}
-
-	userMessageContainer.classList.remove('hidden');
-	userMessage.textContent = text;
+	let chatContainer = document.querySelector('#chatContainer');
+	let userMessageContainer = document.querySelector('#userMessageContainer');
+	
+	let template = userMessageContainer.content;
+	let clone = document.importNode(template, true);
+	clone.querySelector('#userMessage').textContent = text;
+	chatContainer.appendChild(clone);
 	setTimeout(() => scrollToBottom(), 50);
-	console.log('User message displayed');
+	console.info(`User message displayed ${text}`);
 }
 
 function displayAIMessage(text) {
-	const chatContainer = document.getElementById('chatContainer');
-	const aiMessageContainer = document.getElementById('aiMessageContainer');
-	const aiMessage = document.getElementById('aiMessage');
-	if (!chatContainer || !aiMessageContainer || !aiMessage) {
-		console.error('Chat container not available');
-		return;
-	}
+	let chatContainer = document.getElementById('chatContainer');
+	let aiMessageContainer = document.getElementById('aiMessageContainer');
 
-	aiMessageContainer.classList.remove('hidden');
-	aiMessage.textContent = text;
+	let template = aiMessageContainer.content;
+	let clone = document.importNode(template, true);
+	clone.querySelector('#aiMessage').textContent = text;
+	chatContainer.appendChild(clone);
 	setTimeout(() => scrollToBottom(), 50);
-	console.log(`AI message displayed ${text}`);
+	console.info(`AI message displayed ${text}`);
 }
 
 // ============================================
