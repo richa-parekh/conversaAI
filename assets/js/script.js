@@ -1,5 +1,5 @@
 // ============================================
-// 1. WAIT FOR PAGE TO LOAD
+// WAIT FOR PAGE TO LOAD
 // ============================================
 // This ensure HTML is fully loaded before JS runs
 document.addEventListener('DOMContentLoaded', function () {
@@ -9,16 +9,17 @@ document.addEventListener('DOMContentLoaded', function () {
 });
 
 // ============================================
-// 2. INITIALIZATION FUNCTION
+// INITIALIZATION FUNCTION
 // ============================================
 function init() {
 	console.log('Initializing app...');
 	setupThemeSwitch();
 	setupMessageForm();
+	setupCopyButton();
 }
 
 // ============================================
-// 3. THEME FUNCTION
+// THEME FUNCTION
 // ============================================
 function setupThemeSwitch() {
 	const themeSwitch = document.getElementById('themeSwitch');
@@ -52,7 +53,7 @@ function setupThemeSwitch() {
 }
 
 // ============================================
-// 4. MESSAGE FUNCTIONS
+// MESSAGE FUNCTIONS
 // ============================================
 function setupMessageForm() {
 	const chatForm = document.getElementById('chatForm');
@@ -118,7 +119,57 @@ function displayAIMessage(text) {
 }
 
 // ============================================
-// 5. CHECK CURRENT THEME
+// COPY TO CLIPBOARD
+// ============================================
+function setupCopyButton(){
+	const chatContainer = document.querySelector('#chatContainer');
+	if(!chatContainer){
+		console.error('Chat container not found!');
+		return;
+	}
+
+	chatContainer.addEventListener('click', function(event){
+		const copyBtn = event.target.closest('.copy-btn');
+		if(copyBtn){
+			console.log('Copy button clicked!');
+
+			const aiMessage = copyBtn.closest('.message-ai')?.querySelector('.ai-message');
+
+			if(aiMessage){
+				const textToCopy = aiMessage.textContent.trim();
+				console.log(`Text to copy ${textToCopy}`);
+				copyToClipboard(textToCopy, copyBtn);
+			}else{
+				console.warn('No .ai-message found near this copy button');
+			}
+		}
+	});
+}
+
+//
+// COPY TO CLIPBOARD
+//
+function copyToClipboard(text, button){
+	console.log('copyToClipboard');
+	navigator.clipboard.writeText(text)
+		.then(function(){
+			console.log('text copied successfully');
+
+			button.querySelector('.copy').classList.add('hidden');
+			button.querySelector('.copied').classList.remove('hidden');
+
+			setTimeout(function(){
+				button.querySelector('.copied').classList.add('hidden');
+				button.querySelector('.copy').classList.remove('hidden');
+			}, 2000);
+		})
+		.catch(function(error){
+			console.error('Copy failed ', error);
+			alert('Failed to copy text');
+		});
+}
+// ============================================
+// CHECK CURRENT THEME
 // ============================================
 function currentTheme() {
 	const isDark = document.documentElement.classList.contains('dark');
@@ -126,7 +177,7 @@ function currentTheme() {
 }
 
 // ============================================
-// 6. UPDATE SEND BUTTON BEHAVIOR-STYLE
+// UPDATE SEND BUTTON BEHAVIOR-STYLE
 // ============================================
 // Disabled button if user message is not entered and Enabled if user entered message
 function updateSendButton(hasText) {
@@ -142,7 +193,9 @@ function updateSendButton(hasText) {
 	sendButton.classList.toggle(defaultClass, !hasText);
 }
 
-// Helper function to scroll chat to bottom
+// ============================================
+// SCROLL CHAT TO BOTTOM
+// ============================================
 function scrollToBottom() {
 	const chatContainer = document.getElementById('chatContainer');
 	if (chatContainer) {
