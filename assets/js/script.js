@@ -80,7 +80,15 @@ function setupMessageForm() {
 		userInput.focus();
 		updateSendButton();
 	});
-
+	userInput.addEventListener('keypress', function(event){
+		if(event.key === 'Enter'){
+			if(!event.shiftKey){
+				event.preventDefault();
+				console.log('Enter pressed, submitting form');
+				chatForm.dispatchEvent(new Event('submit', { cancelable: true }));
+			}
+		}
+	});
 	console.log('Message form ready!');
 }
 
@@ -119,7 +127,7 @@ function displayAIMessage(text) {
 }
 
 // ============================================
-// COPY TO CLIPBOARD
+// SETUP COPY TO CLIPBOARD
 // ============================================
 function setupCopyButton(){
 	const chatContainer = document.querySelector('#chatContainer');
@@ -146,9 +154,9 @@ function setupCopyButton(){
 	});
 }
 
-//
+// ============================================
 // COPY TO CLIPBOARD
-//
+// ============================================
 function copyToClipboard(text, button){
 	console.log('copyToClipboard');
 	navigator.clipboard.writeText(text)
@@ -168,6 +176,7 @@ function copyToClipboard(text, button){
 			alert('Failed to copy text');
 		});
 }
+
 // ============================================
 // CHECK CURRENT THEME
 // ============================================
