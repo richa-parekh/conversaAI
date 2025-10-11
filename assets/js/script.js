@@ -1,3 +1,5 @@
+const INPUT_MAX_HEIGHT = 300;
+
 // ============================================
 // WAIT FOR PAGE TO LOAD
 // ============================================
@@ -16,6 +18,13 @@ function init() {
 	setupThemeSwitch();
 	setupMessageForm();
 	setupCopyButton();
+
+	const userInput = document.getElementById('userInput');
+	if(userInput){
+		userInput.focus();
+	}
+
+	console.log('=== APP READY ===');
 }
 
 // ============================================
@@ -69,6 +78,14 @@ function setupMessageForm() {
 		userMessage = userInput.value.trim();
 		const hasText = userMessage.length > 0;
 		updateSendButton(hasText);
+
+		userInput.style.height = 'auto';
+		const newHeight = Math.min(userInput.scrollHeight, INPUT_MAX_HEIGHT);
+		userInput.style.height = newHeight + 'px';
+
+		userInput.style.overflowY = userInput.scrollHeight > INPUT_MAX_HEIGHT ? 'auto' : 'hidden';
+
+		scrollToBottom();
 	});
 	chatForm.addEventListener('submit', function (event) {
 		event.preventDefault();
@@ -77,6 +94,8 @@ function setupMessageForm() {
 		sendMessage(userMessage);
 
 		userInput.value = '';
+		userInput.style.height = 'auto';
+		userInput.style.overflowY = 'hidden';
 		userInput.focus();
 		updateSendButton();
 	});
