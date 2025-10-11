@@ -13,3 +13,12 @@
 3. Created clean, well-organized HTML layouts
 4. Configured Tailwind CSS for quick, responsive styling
 5. Implemented a static UI that is ready for JavaScript integration
+
+## Phase 3: Frontend Interactivity
+1. Add dark/light theme toggle with localStorage persistence
+2. Implement message sending with form validation
+3. Create dynamic message rendering for user and AI
+4. Add copy-to-clipboard with visual feedback
+5. Implement keyboard shortcuts (Enter to send)
+6. Add ai response waiting indicator
+7. Include auto-scroll
