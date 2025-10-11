@@ -115,10 +115,11 @@ function sendMessage(text) {
 	console.log(`Sending Message ${text}`);
 
 	displayUserMessage(text);
-
+	showWaitingIndicator();
 	setTimeout(function () {
-		displayAIMessage('This is test AI response message');
-	}, 1000);
+		hideWaitingIndicator();
+		displayAIMessage('Test response from AI. Backend integration in Next Phase 4!');
+	}, 5000);
 }
 
 function displayUserMessage(text) {
@@ -143,6 +144,32 @@ function displayAIMessage(text) {
 	chatContainer.appendChild(clone);
 	setTimeout(() => scrollToBottom(), 50);
 	console.info(`AI message displayed ${text}`);
+}
+
+// ============================================
+// WAITING AI RESPONSE INDICATOR
+// ============================================
+function showWaitingIndicator(){
+	let chatContainer = document.getElementById('chatContainer');
+	let indicatorContainer = document.getElementById('indicatorContainer');
+
+	let template = indicatorContainer.content;
+	let clone = document.importNode(template, true);
+	/* clone.querySelector('.indicator-info').textContent = text; */
+	chatContainer.appendChild(clone);
+	/* setTimeout(() => scrollToBottom(), 50); */
+	console.info(`AI indicator displayed`);
+}
+
+// ============================================
+// WAITING AI RESPONSE INDICATOR
+// ============================================
+function hideWaitingIndicator(){
+	let indicator = document.querySelector('.indicator-wrapper');
+	if(indicator){
+		indicator.remove();
+	}
+	console.info(`AI waiting indicator removed`);
 }
 
 // ============================================
