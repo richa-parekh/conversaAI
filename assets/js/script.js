@@ -248,8 +248,9 @@ function updateSendButton(hasText) {
 // This keeps the chat visible while the keyboard is open
 // Always put in last
 // ============================================
-let keyboardVisible = false;
 let viewportResizeTimer;
+let lastKnownHeight = window.visualViewport ? window.visualViewport.height : window.innerHeight;
+
 if (window.visualViewport) {
 	window.visualViewport.addEventListener('resize', () => {
 		clearTimeout(viewportResizeTimer);
@@ -258,36 +259,40 @@ if (window.visualViewport) {
 			const chatContainer = document.getElementById('chatContainer');
 			if (!chatContainer) return;
 
-			const keyboardHeight = window.innerHeight - window.visualViewport.height;
+			const currentHeight = window.visualViewport.height;
+			const keyboardHeight = window.innerHeight - currentHeight;
 			const extraPadding = 20;
 
-			keyboardVisible = keyboardHeight > 100; // true if keyboard is open
-
-			chatContainer.style.paddingBottom = keyboardVisible
-				? `${keyboardHeight + extraPadding}px`
-				: `${extraPadding}px`;
-
-			// Only scroll when keyboard is closing OR user just sent a message
-			if (!keyboardVisible) {
-				setTimeout(() => scrollToBottom(true), 50);
+			// Only update if height actually changed
+			if (Math.abs(currentHeight - lastKnownHeight) > 10) {
+				lastKnownHeight = currentHeight;
 			}
-		}, 100); // debounce to wait for viewport to settle
+
+			// Adjust padding
+			chatContainer.style.paddingBottom =
+				keyboardHeight > 0
+					? `${keyboardHeight + extraPadding}px`
+					: `${extraPadding}px`;
+
+			// Wait a bit for Safari to repaint before scrolling
+			requestAnimationFrame(() => {
+				setTimeout(() => {
+					scrollToBottom(true);
+				}, 50);
+			});
+		}, 150); // Wait for Safari viewport animation to finish
 	});
 }
 
-// ============================================
-// SCROLL CHAT TO BOTTOM
-// ============================================
 function scrollToBottom(force = false) {
 	const chatContainer = document.getElementById('chatContainer');
 	if (!chatContainer) return;
-	const { scrollHeight, clientHeight } = chatContainer;
 
+	const { scrollHeight, clientHeight } = chatContainer;
 	if (!force && scrollHeight <= clientHeight) return;
-	requestAnimationFrame(() => {
-		chatContainer.scrollTo({
-			top: scrollHeight,
-			behavior: 'smooth'
-		});
+
+	chatContainer.scrollTo({
+		top: scrollHeight,
+		behavior: 'instant' in chatContainer ? 'instant' : 'smooth'
 	});
 }

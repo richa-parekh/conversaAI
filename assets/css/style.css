@@ -95,5 +95,7 @@ body {
 }
 
 #chatContainer {
-  transition: padding-bottom 0.25s ease;
+   transition: padding-bottom 0.25s ease;
+  overscroll-behavior: contain;
+  -webkit-overflow-scrolling: touch; /* crucial for Safari smoothness */
 }
