@@ -93,3 +93,7 @@ body {
   box-shadow: var(--shadow-md);
   color: var(--color-background);
 }
+
+#chatContainer {
+  transition: padding-bottom 0.25s ease;
+}

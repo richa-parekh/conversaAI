@@ -20,7 +20,7 @@ function init() {
 	setupCopyButton();
 
 	const userInput = document.getElementById('userInput');
-	if(userInput){
+	if (userInput) {
 		userInput.focus();
 	}
 
@@ -85,7 +85,7 @@ function setupMessageForm() {
 
 		userInput.style.overflowY = userInput.scrollHeight > INPUT_MAX_HEIGHT ? 'auto' : 'hidden';
 
-		scrollToBottom();
+		/* scrollToBottom(); */
 	});
 	chatForm.addEventListener('submit', function (event) {
 		event.preventDefault();
@@ -96,12 +96,12 @@ function setupMessageForm() {
 		userInput.value = '';
 		userInput.style.height = 'auto';
 		userInput.style.overflowY = 'hidden';
-		userInput.focus();
+		userInput.blur();
 		updateSendButton();
 	});
-	userInput.addEventListener('keypress', function(event){
-		if(event.key === 'Enter'){
-			if(!event.shiftKey){
+	userInput.addEventListener('keypress', function (event) {
+		if (event.key === 'Enter') {
+			if (!event.shiftKey) {
 				event.preventDefault();
 				console.log('Enter pressed, submitting form');
 				chatForm.dispatchEvent(new Event('submit', { cancelable: true }));
@@ -119,18 +119,17 @@ function sendMessage(text) {
 	setTimeout(function () {
 		hideWaitingIndicator();
 		displayAIMessage('Test response from AI. Backend integration in Next Phase 4!');
-	}, 5000);
+	}, 3000);
 }
 
 function displayUserMessage(text) {
 	let chatContainer = document.querySelector('#chatContainer');
 	let userMessageContainer = document.querySelector('#userMessageContainer');
-	
-	let template = userMessageContainer.content;
-	let clone = document.importNode(template, true);
-	clone.querySelector('#userMessage').textContent = text;
-	chatContainer.appendChild(clone);
-	setTimeout(() => scrollToBottom(), 50);
+
+	let template = userMessageContainer.content.cloneNode(true);
+	template.querySelector('#userMessage').textContent = text;
+	chatContainer.appendChild(template);
+	setTimeout(() => scrollToBottom(true), 50);
 	console.info(`User message displayed ${text}`);
 }
 
@@ -138,10 +137,9 @@ function displayAIMessage(text) {
 	let chatContainer = document.getElementById('chatContainer');
 	let aiMessageContainer = document.getElementById('aiMessageContainer');
 
-	let template = aiMessageContainer.content;
-	let clone = document.importNode(template, true);
-	clone.querySelector('#aiMessage').textContent = text;
-	chatContainer.appendChild(clone);
+	let template = aiMessageContainer.content.cloneNode(true);
+	template.querySelector('#aiMessage').textContent = text;
+	chatContainer.appendChild(template);
 	setTimeout(() => scrollToBottom(), 50);
 	console.info(`AI message displayed ${text}`);
 }
@@ -149,24 +147,22 @@ function displayAIMessage(text) {
 // ============================================
 // WAITING AI RESPONSE INDICATOR
 // ============================================
-function showWaitingIndicator(){
+function showWaitingIndicator() {
 	let chatContainer = document.getElementById('chatContainer');
 	let indicatorContainer = document.getElementById('indicatorContainer');
 
-	let template = indicatorContainer.content;
-	let clone = document.importNode(template, true);
-	/* clone.querySelector('.indicator-info').textContent = text; */
-	chatContainer.appendChild(clone);
-	/* setTimeout(() => scrollToBottom(), 50); */
+	let template = indicatorContainer.content.cloneNode(true);
+	chatContainer.appendChild(template);
+	setTimeout(() => scrollToBottom(), 50);
 	console.info(`AI indicator displayed`);
 }
 
 // ============================================
 // WAITING AI RESPONSE INDICATOR
 // ============================================
-function hideWaitingIndicator(){
+function hideWaitingIndicator() {
 	let indicator = document.querySelector('.indicator-wrapper');
-	if(indicator){
+	if (indicator) {
 		indicator.remove();
 	}
 	console.info(`AI waiting indicator removed`);
@@ -175,25 +171,25 @@ function hideWaitingIndicator(){
 // ============================================
 // SETUP COPY TO CLIPBOARD
 // ============================================
-function setupCopyButton(){
+function setupCopyButton() {
 	const chatContainer = document.querySelector('#chatContainer');
-	if(!chatContainer){
+	if (!chatContainer) {
 		console.error('Chat container not found!');
 		return;
 	}
 
-	chatContainer.addEventListener('click', function(event){
+	chatContainer.addEventListener('click', function (event) {
 		const copyBtn = event.target.closest('.copy-btn');
-		if(copyBtn){
+		if (copyBtn) {
 			console.log('Copy button clicked!');
 
 			const aiMessage = copyBtn.closest('.message-ai')?.querySelector('.ai-message');
 
-			if(aiMessage){
+			if (aiMessage) {
 				const textToCopy = aiMessage.textContent.trim();
 				console.log(`Text to copy ${textToCopy}`);
 				copyToClipboard(textToCopy, copyBtn);
-			}else{
+			} else {
 				console.warn('No .ai-message found near this copy button');
 			}
 		}
@@ -203,21 +199,21 @@ function setupCopyButton(){
 // ============================================
 // COPY TO CLIPBOARD
 // ============================================
-function copyToClipboard(text, button){
+function copyToClipboard(text, button) {
 	console.log('copyToClipboard');
 	navigator.clipboard.writeText(text)
-		.then(function(){
+		.then(function () {
 			console.log('text copied successfully');
 
 			button.querySelector('.copy').classList.add('hidden');
 			button.querySelector('.copied').classList.remove('hidden');
 
-			setTimeout(function(){
+			setTimeout(function () {
 				button.querySelector('.copied').classList.add('hidden');
 				button.querySelector('.copy').classList.remove('hidden');
 			}, 2000);
 		})
-		.catch(function(error){
+		.catch(function (error) {
 			console.error('Copy failed ', error);
 			alert('Failed to copy text');
 		});
@@ -249,20 +245,49 @@ function updateSendButton(hasText) {
 }
 
 // ============================================
+// This keeps the chat visible while the keyboard is open
+// Always put in last
+// ============================================
+let keyboardVisible = false;
+let viewportResizeTimer;
+if (window.visualViewport) {
+	window.visualViewport.addEventListener('resize', () => {
+		clearTimeout(viewportResizeTimer);
+
+		viewportResizeTimer = setTimeout(() => {
+			const chatContainer = document.getElementById('chatContainer');
+			if (!chatContainer) return;
+
+			const keyboardHeight = window.innerHeight - window.visualViewport.height;
+			const extraPadding = 20;
+
+			keyboardVisible = keyboardHeight > 100; // true if keyboard is open
+
+			chatContainer.style.paddingBottom = keyboardVisible
+				? `${keyboardHeight + extraPadding}px`
+				: `${extraPadding}px`;
+
+			// Only scroll when keyboard is closing OR user just sent a message
+			if (!keyboardVisible) {
+				setTimeout(() => scrollToBottom(true), 50);
+			}
+		}, 100); // debounce to wait for viewport to settle
+	});
+}
+
+// ============================================
 // SCROLL CHAT TO BOTTOM
 // ============================================
-function scrollToBottom() {
+function scrollToBottom(force = false) {
 	const chatContainer = document.getElementById('chatContainer');
-	if (chatContainer) {
-		if ('scrollBehavior' in document.documentElement.style) {
-			chatContainer.scrollTo({
-				top: chatContainer.scrollHeight,
-				behavior: 'smooth'
-			});
-			return;
-		}
+	if (!chatContainer) return;
+	const { scrollHeight, clientHeight } = chatContainer;
 
-		// Fallback for older browsers
-		chatContainer.scrollTop = chatContainer.scrollHeight;
-	}
+	if (!force && scrollHeight <= clientHeight) return;
+	requestAnimationFrame(() => {
+		chatContainer.scrollTo({
+			top: scrollHeight,
+			behavior: 'smooth'
+		});
+	});
 }
