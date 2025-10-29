@@ -1,3 +1,4 @@
+import { callChatAPI } from "./chat.js";
 const INPUT_MAX_HEIGHT = 300;
 
 // ============================================
@@ -111,15 +112,21 @@ function setupMessageForm() {
 	console.log('Message form ready!');
 }
 
-function sendMessage(text) {
+async function sendMessage(text) {
 	console.log(`Sending Message ${text}`);
 
 	displayUserMessage(text);
 	showWaitingIndicator();
-	setTimeout(function () {
-		hideWaitingIndicator();
-		displayAIMessage('Test response from AI. Backend integration in Next Phase 4!');
-	}, 3000);
+
+	try {
+		const response = await callChatAPI(text);
+		const message = response.success ? response.success : `Error: ${response.error || 'Unknown error occurred!'}`
+		showAIMessageWithDelay(message);
+
+	} catch (error) {
+		console.error('Error calling API:', error);
+		showAIMessageWithDelay('Sorry, something went wrong. Please try again.');
+	} finally { }
 }
 
 function displayUserMessage(text) {
@@ -242,6 +249,16 @@ function updateSendButton(hasText) {
 
 	sendButton.classList.toggle(activeClass, hasText);
 	sendButton.classList.toggle(defaultClass, !hasText);
+}
+
+// ============================================
+// SHOW AI MESSAGE WITH DELAY
+// ============================================
+function showAIMessageWithDelay(message, delay=3000){
+	setTimeout(function () {
+				hideWaitingIndicator();
+				displayAIMessage(message);
+			}, delay);
 }
 
 // ============================================
