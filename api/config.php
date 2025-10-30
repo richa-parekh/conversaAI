@@ -10,11 +10,12 @@ if(!defined('API_ACCESS')){
 
 // Ollama API settings
 define('OLLAMA_API_URL', 'http://localhost:11434/api/generate');
-define('OLLAMA_MODEL', 'llama3.2:1b');
+/* define('OLLAMA_MODEL', 'llama3.2:1b'); */
+define('OLLAMA_MODEL', 'gemma3:1b');
 
 // Response settings
 define('OLLAMA_STREAM', true);
-define('OLLAMA_TIMEOUT', 60);
+define('OLLAMA_TIMEOUT', 300);
 
 // CORS settings (for local development)
 // CORS = Cross-Origin Resource Sharing

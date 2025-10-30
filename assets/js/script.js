@@ -120,7 +120,7 @@ async function sendMessage(text) {
 
 	try {
 		const response = await callChatAPI(text);
-		const message = response.success ? response.success : `Error: ${response.error || 'Unknown error occurred!'}`
+		const message = response.success ? response.message : `Error: ${response.error || 'Unknown error occurred!'}`
 		showAIMessageWithDelay(message);
 
 	} catch (error) {
