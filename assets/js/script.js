@@ -1,6 +1,9 @@
 import { callChatAPI } from "./chat.js";
 const INPUT_MAX_HEIGHT = 300;
-
+// Limit message length
+const MAX_MESSAGE_LENGTH = 2000;
+// Debounce send button to prevent spam
+let sendTimeout;
 // ============================================
 // WAIT FOR PAGE TO LOAD
 // ============================================
@@ -93,7 +96,13 @@ function setupMessageForm() {
 		event.preventDefault();
 
 		console.log(`form submitted ${userMessage}`);
-		sendMessage(userMessage);
+
+		if (userMessage.length > MAX_MESSAGE_LENGTH) {
+			alert('Message too long!');
+			return;
+		}
+
+		debouncedSend(userMessage);
 
 		userInput.value = "";
 		userInput.style.height = "auto";
@@ -110,13 +119,26 @@ function setupMessageForm() {
 			}
 		}
 	});
-	console.log("Message form ready!");
+	console.log("=== setupMessageForm READY! ===");
 }
 
 async function sendMessage(text) {
-	console.log(`Sending Message ${text}`);
+	console.log('=== SENDING MESSAGE ===');
+
+	// Check if already processing
+    if (isProcessing) {
+        console.warn('Already processing a message');
+        return;
+    }
+    
+    isProcessing = true;
 
 	displayUserMessage(text);
+
+	// Disable input
+    setInputEnabled(false);
+
+	// Show typing indicator
 	showWaitingIndicator();
 
 	try {
@@ -124,11 +146,14 @@ async function sendMessage(text) {
 		const message = response.success
 			? response.message
 			: `Error: ${response.error || "Unknown error occurred!"}`;
-		/* showAIMessageWithDelay(message); */
+		console.log('Message sent successfully');
 	} catch (error) {
 		console.error("Error calling API:", error);
-		/* showAIMessageWithDelay('Sorry, something went wrong. Please try again.'); */
+		showAIMessageWithDelay('Sorry, something went wrong. Please try again.');
 	} finally {
+		// Always re-enable input
+        setInputEnabled(true);
+        isProcessing = false;
 	}
 }
 
@@ -141,6 +166,25 @@ function displayUserMessage(text) {
 	chatContainer.appendChild(template);
 	setTimeout(() => scrollToBottom(true), 50);
 	console.info(`User message displayed ${text}`);
+}
+
+function displayAIMessage(text) {
+	let chatContainer = document.getElementById('chatContainer');
+	let aiMessageContainer = document.getElementById('aiMessageContainer');
+
+	let template = aiMessageContainer.content.cloneNode(true);
+	template.querySelector('#aiMessage').textContent = text;
+	chatContainer.appendChild(template);
+	setTimeout(() => scrollToBottom(), 50);
+	console.info(`AI message displayed ${text}`);
+}
+
+// Debounce send button to prevent spam
+function debouncedSend(text) {
+    clearTimeout(sendTimeout);
+    sendTimeout = setTimeout(() => {
+        sendMessage(text);
+    }, 300);
 }
 
 // ============================================
@@ -300,3 +344,24 @@ export function scrollToBottom(force = false) {
 		behavior: "instant" in chatContainer ? "instant" : "smooth",
 	});
 }
+
+function setInputEnabled(isActive = true){
+	const userInput = document.getElementById("userInput");
+	userInput.value = "";
+	userInput.style.height = "auto";
+	userInput.style.overflowY = "hidden";
+
+	userInput.disabled = !isActive;
+}
+// ============================================
+// SHOW AI MESSAGE WITH DELAY
+// ============================================
+function showAIMessageWithDelay(message, delay = 3000) {
+	setTimeout(function () {
+		hideWaitingIndicator();
+		displayAIMessage(message);
+	}, delay);
+}
+
+// Add isProcessing flag at the top of your file
+let isProcessing = false;

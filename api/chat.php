@@ -230,7 +230,16 @@ function streamOllamaResponse($message)
 // ===============================
 // GET OLLAMA RESPONSE
 // ===============================
-streamOllamaResponse($userMessage);
+try{
+    streamOllamaResponse($userMessage);
+}catch (Exception $e){
+    error_log('Error in chat.php: '. $e->getMessage());
+    echo 'data: '. json_encode([
+        'type' => 'error',
+        'message' => 'Server error occurred'
+    ]). '\n\n';
+    flush();
+}
 
 /* $response = getOllamaResponse($userMessage);
 echo json_encode($response); */
