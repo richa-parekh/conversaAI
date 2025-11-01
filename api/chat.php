@@ -4,13 +4,13 @@
 // ===============================
 // Allow config to be loadded
 define('API_ACCESS', true);
-require_once __DIR__.'/config.php';
+require_once __DIR__ . '/config.php';
 
 // ===============================
 // HANDALE PREFLIGHT REQUESTS
 // ===============================
 // Browsers send OPTIONS request before POST (CORS check)
-if($_SERVER['REQUEST_METHOD'] === 'OPTIONS'){
+if ($_SERVER['REQUEST_METHOD'] === 'OPTIONS') {
     http_response_code(200);
     exit();
 }
@@ -18,7 +18,7 @@ if($_SERVER['REQUEST_METHOD'] === 'OPTIONS'){
 // ===============================
 // ALLOW ONLY POST REQUEST
 // ===============================
-if($_SERVER['REQUEST_METHOD'] !== 'POST'){
+if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
     http_response_code(405); // Method not allowed
     echo json_encode([
         'success' => false,
@@ -38,7 +38,7 @@ $rawInput = file_get_contents('php://input');
 $input  = json_decode($rawInput, true);
 
 // Check is JSON is valid
-if(json_last_error() !== JSON_ERROR_NONE){
+if (json_last_error() !== JSON_ERROR_NONE) {
     http_response_code(400); // Bad request
     echo json_encode([
         'success' => false,
@@ -48,7 +48,7 @@ if(json_last_error() !== JSON_ERROR_NONE){
 }
 
 // Validate that message exists
-if(!isset($input['message']) || empty(trim($input['message']))){
+if (!isset($input['message']) || empty(trim($input['message']))) {
     http_response_code(400);
     echo json_encode([
         'success' => false,
@@ -64,14 +64,11 @@ $userMessage = trim($input['message']);
 // ===============================
 error_log("Chat API: Received message - " . $userMessage);
 
-
-
-
 // ===============================
 // CONNECT TO OLLAMA
 // ===============================
 /* Send message to ollama and get response */
-function getOllamaResponse($message){
+/* function getOllamaResponse($message){
     // Prepare request data for ollama
     $requestData = [
         'model' => OLLAMA_MODEL,
@@ -104,7 +101,7 @@ function getOllamaResponse($message){
         error_log('Ollama API Error:'. $error);
         return [
             'success' => false,
-            /* 'error' => 'Failed to connect Ollama:' . $error */
+            'error' => 'Failed to connect Ollama:' . $error
             'error' => 'Failed to connect Ollama'
         ];
     }
@@ -153,12 +150,87 @@ function getOllamaResponse($message){
             'error' => 'Unexpected response formate from Ollama'
         ];
     }
+} */
+
+// ===============================
+// STREAMING FUNCTION
+// ===============================
+function streamOllamaResponse($message)
+{
+    // Set headers for streaming
+    header('Content-Type: text/event-stream');
+    header('Cache-Control: no-cache');
+    header('X-Accel-Buffering: no'); // Disable nginx buffering
+
+    // Flush output buffers
+    if (ob_get_level()) ob_end_flush();
+    flush();
+
+    // Prepare Ollama request
+    $ollamaData = [
+        'model' => OLLAMA_MODEL,
+        'prompt' => $message,
+        'stream' => true // Enable streaming
+    ];
+
+    // Initialize cURL for streaming
+    $ch = curl_init(OLLAMA_API_URL);
+    curl_setopt_array($ch, [
+        CURLOPT_POST => true,
+        CURLOPT_POSTFIELDS => json_encode($ollamaData),
+        CURLOPT_HTTPHEADER => ['Content-Type: application/json'],
+        CURLOPT_WRITEFUNCTION => function ($ch, $data) {
+            // This function is called for each chunk
+            $chunk = trim($data);
+
+            if (empty($chunk)) {
+                return strlen($data);
+            }
+
+            // Parse JSON chunk
+            $json = json_decode($chunk, true);
+
+            if ($json && isset($json['response'])) {
+                // Send to frontend
+                echo "data: " . json_encode([
+                    'type' => 'chunk',
+                    'content' => $json['response'],
+                    'done' => $json['done'] ?? false
+                ]) . "\n\n";
+
+                flush();
+            }
+            error_log("Streaming Data: " . $data);
+            return strlen($data);
+        }
+    ]);
+
+    // Execute streaming request
+    curl_exec($ch);
+
+    // Check for errors
+    if (curl_errno($ch)) {
+        echo 'data: ' . json_encode([
+            'type' => 'error',
+            'message' => curl_error($ch)
+        ]) . "\n\n";
+
+        flush();
+    }
+
+    curl_close($ch);
+
+    // Send completion signal
+    echo 'data: ' . json_encode([
+        'type' => 'done',
+    ]) . '\n\n';
+
+    flush();
 }
-
-
 // ===============================
 // GET OLLAMA RESPONSE
 // ===============================
+streamOllamaResponse($userMessage);
 
-$response = getOllamaResponse($userMessage);
-echo json_encode($response);
+/* $response = getOllamaResponse($userMessage);
+echo json_encode($response); */
