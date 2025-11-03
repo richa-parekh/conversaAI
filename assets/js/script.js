@@ -146,7 +146,7 @@ async function sendMessage(text) {
 		const message = response.success
 			? response.message
 			: `Error: ${response.error || "Unknown error occurred!"}`;
-		console.log('Message sent successfully');
+		console.log('Message sent successfully:'+ message);
 	} catch (error) {
 		console.error("Error calling API:", error);
 		showAIMessageWithDelay('Sorry, something went wrong. Please try again.');
