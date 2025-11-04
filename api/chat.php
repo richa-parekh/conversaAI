@@ -189,8 +189,9 @@ function streamOllamaResponse($message)
 
             // Parse JSON chunk
             $json = json_decode($chunk, true);
-
+            error_log('====1====');
             if ($json && isset($json['response'])) {
+                error_log('====2====');
                 // Send to frontend
                 echo "data: " . json_encode([
                     'type' => 'chunk',
@@ -199,9 +200,17 @@ function streamOllamaResponse($message)
                 ]) . "\n\n";
 
                 flush();
+                error_log("Streaming Data: " . $data);
+                return strlen($data);
+            }else{
+                error_log('====3====');
+                echo 'data: ' . json_encode([
+                    'type' => 'error',
+                    'message' => curl_error($ch)
+                ]) . "\n\n";
+
+                flush();
             }
-            error_log("Streaming Data: " . $data);
-            return strlen($data);
         }
     ]);
 
@@ -232,6 +241,8 @@ function streamOllamaResponse($message)
 // ===============================
 try{
     streamOllamaResponse($userMessage);
+    error_log('====4====');
+
 }catch (Exception $e){
     error_log('Error in chat.php: '. $e->getMessage());
     echo 'data: '. json_encode([

@@ -44,7 +44,7 @@ export async function callChatAPI(message) {
             },
             body: JSON.stringify({ message })
         })
-            .then(response => {
+            .then(response => { 
                 if (!response.ok) {
                     throw new Error(`HTTP error! status: ${response.status}`);
                 }
@@ -61,12 +61,16 @@ export async function callChatAPI(message) {
 
                 function readStream() {
                     reader.read().then(({ done, value }) => {
+                        console.warn("==1=="); 
+                        console.warn(done); 
+                        console.warn(value); 
                         if (done) {
+                            console.warn("==2==");
                             console.log('Stream complete');
                             resolve({ success: true, message: accumulateResponse });
                             return;
                         }
-
+                        console.warn("==3==");
                         const chunk = decoder.decode(value, { stream: true });
                         const lines = chunk.split('\n');
 
@@ -76,7 +80,7 @@ export async function callChatAPI(message) {
                                 try {
                                     if (jsonStr.startsWith('{') && jsonStr.endsWith('}')) {
                                         const data = JSON.parse(jsonStr);
-
+                                        console.warn(data);
                                         if (data.type === 'chunk') {
                                             // Only on first message chunk
                                             if (!messageStarted) {
@@ -84,7 +88,8 @@ export async function callChatAPI(message) {
                                                 messageElement = createAIMessageElement(); // create cloned template
                                                 messageStarted = true;
                                             }
-
+                                            console.warn("==4==");
+                                            console.warn(data.content);
                                             accumulateResponse += data.content;
                                             updateAIMessageContent(messageElement, accumulateResponse);
                                             setTimeout(() => scrollToBottom(), 50);
@@ -104,8 +109,8 @@ export async function callChatAPI(message) {
                 }
 
                 readStream();
-            })
-            .catch(error => {
+            }) 
+            .catch(error => { console.error("==CATCH=="); console.error(error);
                 reject(error);
             });
     });
