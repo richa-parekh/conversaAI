@@ -41,5 +41,14 @@ ConversaAI/
 ### 🔁 Communication Flow:
 User Input → Frontend Validation → AJAX Request → PHP API → Ollama → Response Processing → UI Update
 
+### Project progress
+1. Phase 1: Requirements & Planning Progress - Complete
+2. Phase 2: Environment 𝗦𝗲𝘁𝘂𝗽 & 𝗦𝘁𝗮𝘁𝗶𝗰 𝗨𝗜 Progress - Complete
+3. Phase 3: Frontend Interactivity - Complete
+4. Phase 4: Backend API Integration - Complete
+5. Phase 5: Full-Stack Integration & File Storage - Ongoing
+
+View detailed [Project Progress](C:\learning_projects\conversaAI\docs\project-progress.md) Documentation.
+
 ## 🔗 License
 This project is open-source and available for learning purposes. Free to use with attribution.

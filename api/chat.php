@@ -202,14 +202,6 @@ function streamOllamaResponse($message)
                 flush();
                 error_log("Streaming Data: " . $data);
                 return strlen($data);
-            }else{
-                error_log('====3====');
-                echo 'data: ' . json_encode([
-                    'type' => 'error',
-                    'message' => curl_error($ch)
-                ]) . "\n\n";
-
-                flush();
             }
         }
     ]);
