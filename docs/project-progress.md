@@ -29,7 +29,7 @@
 3. Streaming response implementation
 4. Error handling for network issues
 
-## Phase 5: Backend API Integration - Ongoing
+## Phase 5: Full-Stack Integration & File Storage - Ongoing
 1. Add conversation persistence using JSON files
 2. Create session management without databases
 3. Load previous conversations on page load
