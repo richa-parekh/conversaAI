@@ -48,7 +48,9 @@ User Input → Frontend Validation → AJAX Request → PHP API → Ollama → R
 4. Phase 4: Backend API Integration - Complete
 5. Phase 5: Full-Stack Integration & File Storage - Ongoing
 
-View detailed [Project Progress](C:\learning_projects\conversaAI\docs\project-progress.md) Documentation.
+
+View detailed Documentation.  
+📄[Project Progress](docs/project-progress.md) 
 
 ## 🔗 License
 This project is open-source and available for learning purposes. Free to use with attribution.
