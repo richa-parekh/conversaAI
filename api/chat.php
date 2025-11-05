@@ -163,14 +163,23 @@ function streamOllamaResponse($message)
     header('X-Accel-Buffering: no'); // Disable nginx buffering
 
     // Flush output buffers
-    if (ob_get_level()) ob_end_flush();
-    flush();
+    /*  if (ob_get_level()) ob_end_flush();
+    flush(); */
+    if (ob_get_level() == 0) {
+        ob_start();
+    }
 
     // Prepare Ollama request
     $ollamaData = [
         'model' => OLLAMA_MODEL,
-        'prompt' => $message,
-        'stream' => true // Enable streaming
+        'prompt' => "Summarize clearly and briefly in 3–4 lines. Ensure the thought is complete.\n\nUser: $message",
+        'stream' => true, // Enable streaming
+        "options" => [
+            "num_predict" => 256,
+            "temperature" => 0.7,
+            "top_p" => 0.9,
+            "stop" => ["\n\n", "User:", "###"]
+        ]
     ];
 
     // Initialize cURL for streaming
@@ -181,15 +190,17 @@ function streamOllamaResponse($message)
         CURLOPT_HTTPHEADER => ['Content-Type: application/json'],
         CURLOPT_WRITEFUNCTION => function ($ch, $data) {
             // This function is called for each chunk
+            error_log('====1====');
             $chunk = trim($data);
-
+            error_log("Streaming Data Length: " . strlen($data));
+            error_log("Chunks: " . $chunk);
             if (empty($chunk)) {
                 return strlen($data);
             }
 
             // Parse JSON chunk
             $json = json_decode($chunk, true);
-            error_log('====1====');
+
             if ($json && isset($json['response'])) {
                 error_log('====2====');
                 // Send to frontend
@@ -199,23 +210,29 @@ function streamOllamaResponse($message)
                     'done' => $json['done'] ?? false
                 ]) . "\n\n";
 
+                if (ob_get_level() > 0) {
+                    @ob_flush();
+                }
                 flush();
-                error_log("Streaming Data: " . $data);
                 return strlen($data);
             }
-        }
+        },
+        CURLOPT_TIMEOUT => 0,
+        CURLOPT_CONNECTTIMEOUT => 10,
     ]);
 
     // Execute streaming request
     curl_exec($ch);
-
+    error_log('====3====');
     // Check for errors
     if (curl_errno($ch)) {
+        error_log('====4====');
         echo 'data: ' . json_encode([
             'type' => 'error',
             'message' => curl_error($ch)
         ]) . "\n\n";
-
+        error_log(curl_error($ch));
+        ob_flush();
         flush();
     }
 
@@ -225,22 +242,28 @@ function streamOllamaResponse($message)
     echo 'data: ' . json_encode([
         'type' => 'done',
     ]) . '\n\n';
-
-    flush();
+    error_log('====5====');
+    // End buffering cleanly
+    if (ob_get_level() > 0) {
+        ob_end_flush();
+        flush();
+    }
 }
 // ===============================
 // GET OLLAMA RESPONSE
 // ===============================
-try{
+try {
+    error_log('====IN CHAT.PHP====');
     streamOllamaResponse($userMessage);
-    error_log('====4====');
-
-}catch (Exception $e){
-    error_log('Error in chat.php: '. $e->getMessage());
-    echo 'data: '. json_encode([
+    error_log('====TRY====');
+} catch (Exception $e) {
+    error_log('====CATCH====');
+    error_log('Error in chat.php: ' . $e->getMessage());
+    echo 'data: ' . json_encode([
         'type' => 'error',
         'message' => 'Server error occurred'
-    ]). '\n\n';
+    ]) . '\n\n';
+    ob_flush();
     flush();
 }
 

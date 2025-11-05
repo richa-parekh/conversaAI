@@ -1,4 +1,4 @@
-import { hideWaitingIndicator, scrollToBottom } from "./script.js";
+import { hideWaitingIndicator, scrollToBottom, setupMarked } from "./script.js";
 // ============================================
 // CALL CHAT API
 // ============================================
@@ -33,6 +33,7 @@ const CURRENT_URL = window.location.href;
 } */
 
 export async function callChatAPI(message) {
+    console.log('==IN CHAT.JS==');
     console.log('Calling streaming API...');
     const apiURL = CURRENT_URL + 'api/chat.php';
 
@@ -61,26 +62,30 @@ export async function callChatAPI(message) {
 
                 function readStream() {
                     reader.read().then(({ done, value }) => {
-                        console.warn("==1=="); 
-                        console.warn(done); 
-                        console.warn(value); 
+                        console.log("==1=="); 
+                        console.log('done => ' + done); 
+                        console.log('value => ' + value); 
                         if (done) {
-                            console.warn("==2==");
+                            console.log("==2==");
                             console.log('Stream complete');
+                            console.log('accumulateResponse => ' + accumulateResponse);
                             resolve({ success: true, message: accumulateResponse });
                             return;
                         }
-                        console.warn("==3==");
+                        console.log("==3==");
                         const chunk = decoder.decode(value, { stream: true });
                         const lines = chunk.split('\n');
 
                         for (const line of lines) {
+                            console.log("==FOR LOOP STARTED==");
                             if (line.startsWith('data: ')) {
                                 const jsonStr = line.substring(6).trim();
                                 try {
+                                    console.log("==TRY==");
                                     if (jsonStr.startsWith('{') && jsonStr.endsWith('}')) {
                                         const data = JSON.parse(jsonStr);
-                                        console.warn(data);
+                                        console.log("jsonStr => " + jsonStr);
+                                        console.log("data.type => " + data.type);
                                         if (data.type === 'chunk') {
                                             // Only on first message chunk
                                             if (!messageStarted) {
@@ -88,8 +93,8 @@ export async function callChatAPI(message) {
                                                 messageElement = createAIMessageElement(); // create cloned template
                                                 messageStarted = true;
                                             }
-                                            console.warn("==4==");
-                                            console.warn(data.content);
+                                            console.log("==4==");
+                                            console.log("data.content => "+ data.content);
                                             accumulateResponse += data.content;
                                             updateAIMessageContent(messageElement, accumulateResponse);
                                             setTimeout(() => scrollToBottom(), 50);
@@ -131,5 +136,6 @@ function createAIMessageElement() {
 }
 
 function updateAIMessageContent(element, content) {
-    element.querySelector('#aiMessage').textContent = content;
+    const html = marked.parse(content);
+    element.querySelector('#aiMessage').innerHTML = html;
 }

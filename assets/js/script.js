@@ -22,7 +22,7 @@ function init() {
 	setupThemeSwitch();
 	setupMessageForm();
 	setupCopyButton();
-
+	setupMarked();
 	const userInput = document.getElementById("userInput");
 	if (userInput) {
 		userInput.focus();
@@ -126,17 +126,17 @@ async function sendMessage(text) {
 	console.log('=== SENDING MESSAGE ===');
 
 	// Check if already processing
-    if (isProcessing) {
-        console.warn('Already processing a message');
-        return;
-    }
-    
-    isProcessing = true;
+	if (isProcessing) {
+		console.warn('Already processing a message');
+		return;
+	}
+
+	isProcessing = true;
 
 	displayUserMessage(text);
 
 	// Disable input
-    setInputEnabled(false);
+	setInputEnabled(false);
 
 	// Show typing indicator
 	showWaitingIndicator();
@@ -146,14 +146,16 @@ async function sendMessage(text) {
 		const message = response.success
 			? response.message
 			: `Error: ${response.error || "Unknown error occurred!"}`;
-		console.log('Message sent successfully:'+ message);
+		console.log('==IN SCRIPT.JS==');
+		console.log('response sent successfully:' + JSON.stringify(response));
+		console.log('Message sent successfully:' + message);
 	} catch (error) {
 		console.error("Error calling API:", error);
 		showAIMessageWithDelay('Sorry, something went wrong. Please try again.');
 	} finally {
 		// Always re-enable input
-        setInputEnabled(true);
-        isProcessing = false;
+		setInputEnabled(true);
+		isProcessing = false;
 	}
 }
 
@@ -181,10 +183,10 @@ function displayAIMessage(text) {
 
 // Debounce send button to prevent spam
 function debouncedSend(text) {
-    clearTimeout(sendTimeout);
-    sendTimeout = setTimeout(() => {
-        sendMessage(text);
-    }, 300);
+	clearTimeout(sendTimeout);
+	sendTimeout = setTimeout(() => {
+		sendMessage(text);
+	}, 300);
 }
 
 // ============================================
@@ -265,6 +267,17 @@ function copyToClipboard(text, button) {
 		});
 }
 
+// Configure Marked
+export function setupMarked() {
+	marked.setOptions({
+		highlight: function (code, lang) {
+			const validLang = hljs.getLanguage(lang) ? lang : 'plaintext';
+			return hljs.highlight(code, { language: validLang }).value;
+		},
+		langPrefix: 'hljs language-', // highlight.js style classes
+		breaks: true, // Optional: render line breaks as <br>
+	});
+}
 // ============================================
 // CHECK CURRENT THEME
 // ============================================
@@ -345,7 +358,7 @@ export function scrollToBottom(force = false) {
 	});
 }
 
-function setInputEnabled(isActive = true){
+function setInputEnabled(isActive = true) {
 	const userInput = document.getElementById("userInput");
 	userInput.value = "";
 	userInput.style.height = "auto";
